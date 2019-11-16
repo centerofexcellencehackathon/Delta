@@ -1,0 +1,15 @@
+import smtplib
+import RPi.GPIO as SENSOR
+import os
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(7,GPIO.IN)
+while(1):
+	if (GPIO.input(7))==True:
+		server=smtplib.SMTP('smtp.gmail.com',587)
+		server.starttls()
+		server.login("sender@gmail.com","senderpassword")
+		msg= "intruder alert alert!!!!"
+		os.system("sudo raspistill -o sensor.jpg")
+		server.sendmail("sender@gmail.com","reciever@gmail.com",msg)
+		print("mail sent")
+		server.quit() 

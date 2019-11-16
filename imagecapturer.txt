@@ -1,0 +1,27 @@
+import os
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.image import  MIMEImage
+from email.mime.multipart import  MIMEMultipart
+import RPi.GPIO as ATTACHMENT
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(7,GPIO.IN)
+
+def send_mail():
+	
+	os.system("sudo raspistill -o attachment.jpg")
+	img_data = open("/home/pi/user/attachment.jpg",'rb').read()
+	msg = MIMEMultipart()
+	text = MIMEText("security threat")
+	image = MIMEImage(img_data, name =os.path.basename("/home/pi/user/attachment.jpg"))
+	msg.attach(image)
+	server=smtplib.SMTP('smtp.gmail.com',587)
+	server.starttls()
+	server.login("sender@gmail.com","senderpassword")
+	server.sendmail("sender@gmail.com","reciever@gmail.com",msg.as_string())
+	print("mail sent")
+	server.quit()
+while(1):
+	if((GPIO.input(7)==True):
+		send_mail()

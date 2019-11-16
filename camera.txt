@@ -1,0 +1,15 @@
+Camera instalation
+
+$ sudo apt-get update
+$ sudo apt-get upgrade
+$ sudo apt-get install uv4l uv4l-raspicam
+$ sudo apt-get install uv4l-raspicam-extras
+$ sudo apt-get install uv4l-server
+$ sudo apt-get install uv4l-mjpegstream
+$ sudo reboot
+
+sudo uv4l --driver raspicam  --width 640 --height 480 --framerate 20 --server-option '--port=9090' --server-option '--max-queued-connections=30'
+
+$sudo pkill uv4l      
+--------------------------------To take the image----------------------------------
+$sudo raspistill -o filename.jpg                   
